@@ -17,5 +17,8 @@ namespace InventoryOrderingSystem.Models.Repositories.Customers
 
         public Task AddCustonAsync(Customer customer);
         Task AddCustomerAsync(Customer customer);
+        Task<Customer?> GetByNameAsync(string customerName);
+        Customer? GetByIdAsync(int customerId);
+        Task<List<Customer>> GetAllAsync();
     }
 }

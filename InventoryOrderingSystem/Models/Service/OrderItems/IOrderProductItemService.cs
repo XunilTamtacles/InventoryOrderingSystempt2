@@ -15,8 +15,13 @@ namespace InventoryOrderingSystem.Models.Services.OrderProductItems
         Task UpdateOrderProductItemAsync(OrderProductItem item);
 
         Task DeleteOrderProductItemAsync(int id);
-       
-     
+
+        Task<bool> CreateOrderAsync(Order order);
+        Task<bool> DeleteOrderAsync(int orderId);
+        Task<List<Order>> GetAllOrdersAsync();
+        Task<Order> GetOrderByIdAsync(int orderId);
+
+
 
     }
 }

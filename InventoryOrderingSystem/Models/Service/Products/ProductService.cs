@@ -1,5 +1,8 @@
 ﻿using InventoryOrderingSystem.Models.Database;
 using InventoryOrderingSystem.Models.Repositories.Products;
+using InventoryOrderingSystem.Models.Services.Products;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InventoryOrderingSystem.Models.Services.Products
 {
@@ -12,31 +15,32 @@ namespace InventoryOrderingSystem.Models.Services.Products
             _repository = repository;
         }
 
-        
+      
         public async Task<bool> CreateProductAsync(Product product)
         {
             await _repository.AddProductAsync(product);
             return true;
         }
 
-       
+        
         public async Task<List<Product>> GetAllProductsAsync()
         {
             return await _repository.GetAllProductsAsync();
-           
         }
 
+        
         public async Task<Product?> GetProductByIdAsync(int productId)
         {
             return await _repository.GetProductByIdAsync(productId);
         }
 
+        
         public async Task UpdateProductAsync(Product product)
         {
             await _repository.UpdateProductAsync(product);
         }
 
-      
+        
         public async Task<bool> DeleteProductAsync(int productId)
         {
             await _repository.DeleteProductAsync(productId);

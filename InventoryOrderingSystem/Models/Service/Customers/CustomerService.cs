@@ -15,23 +15,36 @@ namespace InventoryOrderingSystem.Models.Services.Customers
         
         public async Task<List<Customer>> GetAllCustomerAsync()
         {
-            return await _customerRepository.GetAllCustomersAsync();
+            return await _customerRepository.GetAllAsync();
         }
 
         public async Task<Customer?> GetCustomerByIdAsync(int customerId)
         {
-            return await _customerRepository.GetCustomerByIdAsync(customerId);
+            var customer = _customerRepository.GetByIdAsync(customerId);
+
+            if (customer == null)
+            {
+                throw new Exception($"Customer with ID {customerId} not found.");
+            }
+
+            return customer;
         }
 
         public async Task<Customer?> GetCustomerByNameAsync(string customerName)
         {
-            return await _customerRepository.GetCustomerByNameAsync(customerName);
+            var customer = await _customerRepository.GetByNameAsync(customerName);
+            if (customer == null)
+            {
+                throw new Exception($"Customer with name {customerName} not found.");
+            }
+            return customer;
         }
 
        
-        public async Task CreateCustomerAsync(Customer customer)
+        public async Task<bool> CreateCustomerAsync(Customer customer)
         {
             await _customerRepository.AddCustomerAsync(customer);
+            return true;
         }
 
         
@@ -41,9 +54,10 @@ namespace InventoryOrderingSystem.Models.Services.Customers
         }
 
      
-        public async Task DeleteCustomerAsync(int customerId)
+        public async Task<bool> DeleteCustomerAsync(int customerId)
         {
             await _customerRepository.DeleteCustomerAsync(customerId);
+            return true;
         }
     }
 }

@@ -14,4 +14,5 @@ public partial class Product
     public decimal Price { get; set; }
 
     public string? Unit { get; set; }
+    public int Id { get; internal set; }
 }
