@@ -1,3 +1,5 @@
+using InventoryOrderingSystem.Models.Service.Customers;
+
 namespace InventoryOrderingSystem
 {
     public class Program
@@ -8,6 +10,13 @@ namespace InventoryOrderingSystem
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+            // Products
+            builder.Services.AddScoped<IProductService, ProductService>();
+            
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            // OrderProductItems
+            builder.Services.AddScoped<IOrderProductItemService, OrderProductItemService>();
 
             var app = builder.Build();
 
