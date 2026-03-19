@@ -15,7 +15,7 @@ namespace InventoryOrderingSystem.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Index", "Dashboard");
         }
 
         public IActionResult Privacy()

@@ -10,5 +10,6 @@ namespace InventoryOrderingSystem.Models.Services.Customers
         Task<Customer?> GetCustomerByIdAsync(int customerId);
         Task UpdateCustomerAsync(Customer customer);
         Task<bool> DeleteCustomerAsync(int customerId);
+        Task<string?> GetAllCustomerAsync();
     }
 }
