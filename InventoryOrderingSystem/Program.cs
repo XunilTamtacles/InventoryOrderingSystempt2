@@ -1,6 +1,7 @@
 using InventoryOrderingSystem.Models.Services.Orders;
 using InventoryOrderingSystem.Models.Services.Products;
-using InventoryOrderingSystem.Models.Service.Customers;
+using InventoryOrderingSystem.Models.Services.OrderProductItems;
+using InventoryOrderingSystem.Models.Services.Customers;
 
 namespace InventoryOrderingSystem
 {
