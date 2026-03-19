@@ -15,6 +15,7 @@ namespace InventoryOrderingSystem.Models.Repositories.Customers
       
         public Task DeleteCustomerAsync(int customerId);
 
-
+        public Task AddCustonAsync(Customer customer);
+        Task AddCustomerAsync(Customer customer);
     }
 }

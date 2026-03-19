@@ -7,7 +7,7 @@ namespace InventoryOrderingSystem.Models.Repositories.Orders
     {
         private readonly InventoryOrderingSystemContext _context;
 
-        public OrderRepository(InventoryOrderingSystemContext context)dd
+        public OrderRepository(InventoryOrderingSystemContext context)
         {
             _context = context;
         }
@@ -18,11 +18,11 @@ namespace InventoryOrderingSystem.Models.Repositories.Orders
             return await _context.Orders.ToListAsync();
         }
 
- 
-        public Task<Order?> GetOrderByIdAsync(int orderId)
+     
+        public async Task<Order?> GetOrderByIdAsync(int orderId)
         {
-           
-            return Task.FromResult<Order?>(null);
+            var orders = await _context.Orders.ToListAsync();
+            return orders.FirstOrDefault(o => o.Id == orderId);
         }
 
         
@@ -32,23 +32,23 @@ namespace InventoryOrderingSystem.Models.Repositories.Orders
             await _context.SaveChangesAsync();
         }
 
-       
+        
         public async Task UpdateOrderAsync(Order order)
         {
             _context.Orders.Update(order);
             await _context.SaveChangesAsync();
         }
 
-       
-        public async Task DeleteOrderAsync(Order order)
+        public async Task DeleteOrderAsync(int orderId)
         {
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-        }
+            var orders = await _context.Orders.ToListAsync();
+            var order = orders.FirstOrDefault(o => o.Id == orderId);
 
-        public Task DeleteOrderAsync(int orderId)
-        {
-            throw new NotImplementedException();
+            if (order != null)
+            {
+                _context.Orders.Remove(order);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -12,20 +12,23 @@ namespace InventoryOrderingSystem.Models.Services.Products
             _repository = repository;
         }
 
+        
         public async Task<bool> CreateProductAsync(Product product)
         {
             await _repository.AddProductAsync(product);
             return true;
         }
 
+       
         public async Task<List<Product>> GetAllProductsAsync()
         {
             return await _repository.GetAllProductsAsync();
+           
         }
 
-        public Task<Product?> GetProductByIdAsync(int productId)
+        public async Task<Product?> GetProductByIdAsync(int productId)
         {
-            return Task.FromResult<Product?>(null);
+            return await _repository.GetProductByIdAsync(productId);
         }
 
         public async Task UpdateProductAsync(Product product)
@@ -33,8 +36,10 @@ namespace InventoryOrderingSystem.Models.Services.Products
             await _repository.UpdateProductAsync(product);
         }
 
+      
         public async Task<bool> DeleteProductAsync(int productId)
         {
+            await _repository.DeleteProductAsync(productId);
             return true;
         }
     }

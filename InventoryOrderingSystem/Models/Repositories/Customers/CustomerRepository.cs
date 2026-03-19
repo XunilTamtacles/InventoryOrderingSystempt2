@@ -12,26 +12,29 @@ namespace InventoryOrderingSystem.Models.Repositories.Customers
             _context = context;
         }
 
-      
         public async Task<List<Customer>> GetAllCustomersAsync()
         {
             return await _context.Customers.ToListAsync();
         }
 
-        
         public async Task<Customer?> GetCustomerByIdAsync(int id)
         {
-            return await _context.Customers.FindAsync(id);
+            var customers = await _context.Customers.ToListAsync();
+            return customers.FirstOrDefault(c => c.Id == id);
         }
 
-       
+        public async Task<Customer?> GetCustomerByNameAsync(string customerName)
+        {
+            var customers = await _context.Customers.ToListAsync();
+            return customers.FirstOrDefault(c => c.Name == customerName);
+        }
+
         public async Task AddCustomerAsync(Customer customer)
         {
             await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
         }
 
-        
         public async Task UpdateCustomerAsync(Customer customer)
         {
             _context.Customers.Update(customer);
@@ -40,7 +43,9 @@ namespace InventoryOrderingSystem.Models.Repositories.Customers
 
         public async Task DeleteCustomerAsync(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customers = await _context.Customers.ToListAsync();
+            var customer = customers.FirstOrDefault(c => c.Id == id);
+
             if (customer != null)
             {
                 _context.Customers.Remove(customer);

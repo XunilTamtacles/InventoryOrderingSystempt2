@@ -1,20 +1,49 @@
 ﻿using InventoryOrderingSystem.Models.Database;
+using InventoryOrderingSystem.Models.Repositories.Customers;
 
-namespace InventoryOrderingSystem.Models.Service.Customers
+namespace InventoryOrderingSystem.Models.Services.Customers
 {
-    public interface ICustomerService
+    public class CustomerService : ICustomerService
     {
-        public Task<bool> CreateCustomerAsync(Customer customer);
+        private readonly ICustomerRepository _customerRepository;
 
-      public Task<List<Customer>> GetAllCustomerAsync();
+        public CustomerService(ICustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
 
-        public Task<Customer?> GetCustomerByNameAsync(string customerName);
+        
+        public async Task<List<Customer>> GetAllCustomerAsync()
+        {
+            return await _customerRepository.GetAllCustomersAsync();
+        }
 
-        public Task<Customer?> GetCustomerByIdAsync(int customerId);
+        public async Task<Customer?> GetCustomerByIdAsync(int customerId)
+        {
+            return await _customerRepository.GetCustomerByIdAsync(customerId);
+        }
 
-        public Task UpdateCustomerAsync(Customer customer);
+        public async Task<Customer?> GetCustomerByNameAsync(string customerName)
+        {
+            return await _customerRepository.GetCustomerByNameAsync(customerName);
+        }
 
-        public Task<bool> DeleteCustomerAsync(int customerId);
+       
+        public async Task CreateCustomerAsync(Customer customer)
+        {
+            await _customerRepository.AddCustomerAsync(customer);
+        }
 
+        
+        public async Task UpdateCustomerAsync(Customer customer)
+        {
+            await _customerRepository.UpdateCustomerAsync(customer);
+        }
+
+     
+        public async Task DeleteCustomerAsync(int customerId)
+        {
+            await _customerRepository.DeleteCustomerAsync(customerId);
+        }
     }
 }

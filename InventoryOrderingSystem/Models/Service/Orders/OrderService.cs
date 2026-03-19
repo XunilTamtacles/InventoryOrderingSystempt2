@@ -23,18 +23,22 @@ namespace InventoryOrderingSystem.Models.Services.Orders
             return await _repository.GetAllOrdersAsync();
         }
 
-        public Task<Order?> GetOrderByIdAsync(int orderId)
+      
+        public async Task<Order?> GetOrderByIdAsync(int orderId)
         {
-            return Task.FromResult<Order?>(null);
+            return await _repository.GetOrderByIdAsync(orderId);
         }
 
+       
         public async Task UpdateOrderAsync(Order order)
         {
             await _repository.UpdateOrderAsync(order);
         }
 
+       
         public async Task<bool> DeleteOrderAsync(int orderId)
         {
+            await _repository.DeleteOrderAsync(orderId);
             return true;
         }
     }

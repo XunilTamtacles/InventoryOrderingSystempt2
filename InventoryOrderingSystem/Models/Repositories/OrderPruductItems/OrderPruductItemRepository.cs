@@ -13,41 +13,44 @@ namespace InventoryOrderingSystem.Models.Repositories.OrderProductItems
             _context = context;
         }
 
+     
         public async Task<List<OrderProductItem>> GetAllOrderProductItemsAsync()
         {
             return await _context.OrderProductItems.ToListAsync();
         }
 
       
-        public Task<OrderProductItem?> GetOrderProductItemByIdAsync(int orderProductItemId)
+        public async Task<OrderProductItem?> GetOrderProductItemByIdAsync(int orderProductItemId)
         {
-           
-            return Task.FromResult<OrderProductItem?>(null);
+            var items = await _context.OrderProductItems.ToListAsync();
+            return items.FirstOrDefault(i => i.Id == orderProductItemId);
         }
 
-       
+        
         public async Task AddOrderProductItemAsync(OrderProductItem orderProductItem)
         {
             await _context.OrderProductItems.AddAsync(orderProductItem);
             await _context.SaveChangesAsync();
         }
 
+       
         public async Task UpdateOrderProductItemAsync(OrderProductItem orderProductItem)
         {
             _context.OrderProductItems.Update(orderProductItem);
             await _context.SaveChangesAsync();
         }
 
-      
-        public async Task DeleteOrderProductItemAsync(OrderProductItem orderProductItem)
+        
+        public async Task DeleteOrderProductItemAsync(int orderProductItemId)
         {
-            _context.OrderProductItems.Remove(orderProductItem);
-            await _context.SaveChangesAsync();
-        }
+            var items = await _context.OrderProductItems.ToListAsync();
+            var item = items.FirstOrDefault(i => i.Id == orderProductItemId);
 
-        public Task DeleteOrderProductItemAsync(int orderProductItemId)
-        {
-            throw new NotImplementedException();
+            if (item != null)
+            {
+                _context.OrderProductItems.Remove(item);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

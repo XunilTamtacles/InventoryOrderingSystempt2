@@ -1,18 +1,17 @@
 ﻿using InventoryOrderingSystem.Models.Database;
 
-namespace InventoryOrderingSystem.Models.Repositories.OrderPruductItems
+namespace InventoryOrderingSystem.Models.Repositories.OrderProductItems
 {
     public interface IOrderProductItemRepository
-
     {
-        public Task<List<OrderProductItem>> GetAllOrderProductItemsAsync();
+        Task<List<OrderProductItem>> GetAllOrderProductItemsAsync();
 
-        public Task<OrderProductItem?> GetOrderProductItemByIdAsync(int orderProductItemId);    
+        Task<OrderProductItem?> GetOrderProductItemByIdAsync(int orderProductItemId);
 
-        public Task AddOrderProductItemAsync(OrderProductItem orderProductItem);
+        Task AddOrderProductItemAsync(OrderProductItem orderProductItem);
 
-        public Task UpdateOrderProductItemAsync(OrderProductItem orderProductItem);
+        Task UpdateOrderProductItemAsync(OrderProductItem orderProductItem);
 
-        public Task DeleteOrderProductItemAsync(int orderProductItemId);
+        Task DeleteOrderProductItemAsync(int orderProductItemId);
     }
 }
