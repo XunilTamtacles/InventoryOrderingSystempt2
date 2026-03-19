@@ -16,4 +16,7 @@ public partial class Order
     public DateTime DateCreated { get; set; }
 
     public string Status { get; set; } = null!;
+    public object Customer { get; internal set; }
+    public object OrderItems { get; internal set; } = null!;
+    public int Id { get; internal set; }
 }
