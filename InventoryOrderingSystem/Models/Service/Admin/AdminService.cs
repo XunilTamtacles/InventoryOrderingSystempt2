@@ -14,37 +14,34 @@ namespace InventoryOrderingSystem.Service.Admins
             _adminRepo = adminRepo;
         }
 
-        // Register a new admin
+     
         public async Task RegisterAdminAsync(Administrator admin)
         {
-            // Hash the password before saving
+         
             admin.Password = SecurityHelper.HashPassword(admin.Password);
-
             await _adminRepo.AddAsync(admin);
         }
 
-        // Check if an admin exists
+        
         public Task<bool> AdminExists(string username)
         {
             return _adminRepo.AdminExists(username);
         }
 
-       
-        public async Task<LoginResponseModel> LoginAdminAsync(string username, string password)
+        
+        public async Task<Administrator?> LoginAdminAsync(string username, string password)
         {
             var storedAdmin = await _adminRepo.GetAdminByUsernameAsync(username);
-            var result = new LoginResponseModel { LoginSuccessful = false, IsAdmin = true };
 
             if (storedAdmin != null && SecurityHelper.VerifyPassword(password, storedAdmin.Password))
             {
-                result.LoginSuccessful = true;
-                result.UserId = storedAdmin.Id;
+                return storedAdmin; 
             }
 
-            return result;
+            return null; 
         }
 
-        // Get admin by username
+        
         public Task<Administrator?> GetAdminByUsernameAsync(string username)
         {
             return _adminRepo.GetAdminByUsernameAsync(username);
