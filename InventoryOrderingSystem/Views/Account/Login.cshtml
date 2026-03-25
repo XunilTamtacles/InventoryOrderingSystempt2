@@ -1,0 +1,67 @@
+﻿@model InventoryOrderingSystem.Models.Database.Administrator
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">Admin Login</h3>
+
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                @Html.TextBoxFor(x => x.Username, new { @class = "form-control", placeholder = "Enter username" })
+                                @Html.ValidationMessageFor(x => x.Username, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Enter password" })
+                                @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <script>
+                        Swal.fire('Success', '@ViewBag.SuccessMessage', 'success');
+                    </script>
+                }
+
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <script>
+                        Swal.fire('Error', '@ViewBag.ErrorMessage', 'error');
+                    </script>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

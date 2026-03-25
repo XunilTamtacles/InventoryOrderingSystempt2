@@ -1,63 +1,67 @@
 ﻿using InventoryOrderingSystem.Models.Database;
 using InventoryOrderingSystem.Models.Repositories.Customers;
+using InventoryOrderingSystem.Models.Services.Customers;
+using System.Threading.Tasks;
 
-namespace InventoryOrderingSystem.Models.Services.Customers
+namespace InventoryOrderingSystem.Service.Customers
 {
     public class CustomerService : ICustomerService
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerRepository _repository;
 
-        public CustomerService(ICustomerRepository customerRepository)
+        public CustomerService(ICustomerRepository repository)
         {
-            _customerRepository = customerRepository;
+            _repository = repository;
         }
 
-        
-        public async Task<List<Customer>> GetAllCustomerAsync()
+        public async Task<bool> CustomerExists(string username)
         {
-            return await _customerRepository.GetAllAsync();
+            var allCustomers = await _repository.GetAllCustomersAsync();
+            return allCustomers.Exists(c => c.Username == username);
         }
 
-        public async Task<Customer?> GetCustomerByIdAsync(int customerId)
+        public async Task<LoginResponseModel> LoginCustomer(LoginModel model)
         {
-            var customer = _customerRepository.GetByIdAsync(customerId);
+            var allCustomers = await _repository.GetAllCustomersAsync();
+            var customer = allCustomers.Find(c => c.Username == model.Username && c.Password == model.Password);
 
-            if (customer == null)
+            if (customer != null)
             {
-                throw new Exception($"Customer with ID {customerId} not found.");
+                return new LoginResponseModel
+                {
+                    LoginSuccessful = true,
+                    UserId = customer.Id,
+                    IsAdmin = false
+                };
             }
 
-            return customer;
+            return new LoginResponseModel { LoginSuccessful = false };
         }
 
-        public async Task<Customer?> GetCustomerByNameAsync(string customerName)
+        public async Task CreateCustomerAsync(Customer customer)
         {
-            var customer = await _customerRepository.GetByNameAsync(customerName);
-            if (customer == null)
-            {
-                throw new Exception($"Customer with name {customerName} not found.");
-            }
-            return customer;
+            await _repository.AddCustomerAsync(customer);
         }
 
-       
-        public async Task<bool> CreateCustomerAsync(Customer customer)
+        public async Task<List<Customer>> GetAllCustomersAsync()
         {
-            await _customerRepository.AddCustomerAsync(customer);
-            return true;
+            return await _repository.GetAllCustomersAsync();
         }
 
-        
+        public async Task<Customer?> GetCustomerByIdAsync(int id)
+        {
+            var customers = await _repository.GetAllCustomersAsync();
+            return customers.Find(x => x.Id == id);
+        }
+
         public async Task UpdateCustomerAsync(Customer customer)
         {
-            await _customerRepository.UpdateCustomerAsync(customer);
+            await _repository.UpdateCustomerAsync(customer);
         }
 
-     
-        public async Task<bool> DeleteCustomerAsync(int customerId)
+        public async Task DeleteCustomerAsync(int id)
         {
-            await _customerRepository.DeleteCustomerAsync(customerId);
-            return true;
+            await _repository.DeleteCustomerAsync(id);
         }
     }
 }

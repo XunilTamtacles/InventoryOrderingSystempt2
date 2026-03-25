@@ -8,6 +8,7 @@ using InventoryOrderingSystem.Models.Services.Products;
 using InventoryOrderingSystem.Models.Services.Orders;
 using InventoryOrderingSystem.Models.Services.OrderProductItems;
 using Microsoft.EntityFrameworkCore;
+using InventoryOrderingSystem.Service.Orders;
 
 namespace InventoryOrderingSystem
 {
@@ -32,6 +33,7 @@ namespace InventoryOrderingSystem
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IOrderProductItemService, OrderProductItemService>();
+            builder.Services.AddScoped<IAdminsService, AdminsService>();
 
             var app = builder.Build();
 

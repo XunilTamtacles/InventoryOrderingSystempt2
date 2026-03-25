@@ -18,4 +18,5 @@ public partial class Customer
     public string Password { get; set; } = null!;
     public int Id { get; internal set; }
     public string Name { get; internal set; }
+    public object Username { get; internal set; }
 }
