@@ -21,20 +21,20 @@ namespace InventoryOrderingSystem.Controllers
             _adminService = adminService;
         }
 
-        // Show login page
+       
         public IActionResult Login()
         {
             return View();
         }
 
-        // Handle login post
+        
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            // Try admin login
+            
             var admin = await _adminService.LoginAdminAsync(model.Username, model.Password);
 
             if (admin != null)
@@ -43,7 +43,7 @@ namespace InventoryOrderingSystem.Controllers
                 return RedirectToAction("Index", "Admin");
             }
 
-            // Try customer login
+            
             var customer = await _customerService.LoginCustomerAsync(model.Username, model.Password);
             if (customer != null)
             {
@@ -70,7 +70,6 @@ namespace InventoryOrderingSystem.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
 
-        // Logout
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -7,9 +7,9 @@ namespace InventoryOrderingSystem.Controllers
 {
     public class AdminRegistrationController : Controller
     {
-        private readonly IAdminsService _adminService;
+        private readonly AdminsService _adminService;
 
-        public AdminRegistrationController(IAdminsService adminService)
+        public AdminRegistrationController(AdminsService adminService)
         {
             _adminService = adminService;
         }
@@ -33,7 +33,7 @@ namespace InventoryOrderingSystem.Controllers
                 return View(model);
             }
 
-          wbww
+          
             await _adminService.RegisterAdminAsync(model);
 
             ViewBag.SuccessMessage = "Admin registered successfully!";

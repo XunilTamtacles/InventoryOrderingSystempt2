@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace InventoryOrderingSystem.Service.Admins
 {
-    public class AdminsService : IAdminsService
+    public class AdminsService : IAdminRepository
     {
         private readonly IAdminRepository _adminRepo;
 
